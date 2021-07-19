@@ -1,0 +1,209 @@
+
+
+<form #f="ngForm" (ngSubmit)="onSubmit()">
+
+
+  <div class="form-group">
+    <label for="nome">Nome</label>
+    <input 
+      class="form-control" 
+      id="nome" 
+      rows="3" 
+      minlength="3" maxlength="100" 
+      placeholder="nome" name="nome"
+      #nome="ngModel" 
+      [(ngModel)]="cliente.nome" 
+      [class.is-invalid]="!nome.valid && nome.touched"
+      required>
+    <div *ngIf="!nome.valid && nome.touched" class="text-danger">
+      digite um nome válido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="cpf">CPF</label>
+    <div class="">
+    </div>  
+    <p-inputMask 
+      class="" 
+      id="cpf" 
+      mask="999.999.999-99"
+      placeholder="cpf" name="cpf"
+      #cpf="ngModel" 
+      [(ngModel)]="cliente.cpf" 
+      [class.is-invalid]="!cpf.valid && cpf.touched"
+      required>
+    </p-inputMask>
+    <div class="">
+    </div>
+    <div *ngIf="!nome.valid && nome.touched" class="text-danger">
+      digite um cpf válido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="cep">CEP</label>
+    <div class="">
+    </div>  
+    <p-inputMask (onBlur)="buscaCep()"
+      class="" 
+      id="cep" 
+      mask="99999-999"
+      placeholder="cep" name="cep"
+      #cep="ngModel" 
+      [(ngModel)]="cliente.cep" 
+      [class.is-invalid]="!cep.valid && cep.touched"
+      required>
+    </p-inputMask>
+    <div class="">
+    </div>
+    <div *ngIf="!nome.valid && nome.touched" class="text-danger">
+      digite um cep válido.
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="logradouro">Logradouro</label>
+    <input 
+      class="form-control" 
+      id="logradouro" 
+      rows="3" 
+      placeholder="logradouro" name="logradouro"
+      #logradouro="ngModel" 
+      [(ngModel)]="cliente.logradouro" 
+      [class.is-invalid]="!logradouro.valid && logradouro.touched"
+      required>
+    <div *ngIf="!logradouro.valid && logradouro.touched" class="text-danger">
+      digite um logradouro válido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="bairro">Bairro</label>
+    <input 
+      class="form-control" 
+      id="bairro" 
+      rows="3" 
+      placeholder="bairro" name="bairro"
+      #bairro="ngModel" 
+      [(ngModel)]="cliente.bairro" 
+      [class.is-invalid]="!bairro.valid && bairro.touched"
+      required>
+    <div *ngIf="!bairro.valid && bairro.touched" class="text-danger">
+      digite um bairro válido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="cidade">cidade</label>
+    <input 
+      class="form-control" 
+      id="cidade" 
+      rows="3" 
+      placeholder="cidade" name="cidade"
+      #cidade="ngModel" 
+      [(ngModel)]="cliente.cidade" 
+      [class.is-invalid]="!cidade.valid && cidade.touched"
+      required>
+    <div *ngIf="!cidade.valid && cidade.touched" class="text-danger">
+      digite um cidade válido.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="uf">UF</label>
+    <input 
+      class="form-control" 
+      id="uf" 
+      rows="3"  maxlength="2" 
+      placeholder="uf" name="uf"
+      #uf="ngModel" 
+      [(ngModel)]="cliente.uf" 
+      [class.is-invalid]="!uf.valid && uf.touched"
+      required>
+    <div *ngIf="!uf.valid && uf.touched" class="text-danger">
+      digite um uf válido.
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="Telefones">Telefone(s)</label>
+    <span>&nbsp;&nbsp;&nbsp;</span>
+    <div class="col-md-6">
+      <select (change)="changeFone()"
+      #tipofoneInput
+      class="form-control" 
+      id="tipo" name="tipo" 
+      >
+      <option value="">-- selecione --</option> 
+      <option value="residencial">residencial</option> 
+      <option value="comercial">comercial</option> 
+      <option value="celular">celular</option> 
+    </select>
+
+    <div class="row"> &nbsp; </div>
+
+      <p-inputMask   *ngIf="tipofone == 1"
+      mask="(99)9999-9999" 
+      id="telefone" 
+      [(ngModel)]="foneInput1"
+      placeholder="número" name="telefone">
+      </p-inputMask>
+      <p-inputMask    *ngIf="tipofone == 2"
+      mask="(99)99999-9999" 
+      id="telefone" 
+      [(ngModel)]="foneInput2"
+      placeholder="número" name="telefone">
+      </p-inputMask>
+
+       <button class="btn btn-default" type="button"
+       (click)="addFone()">
+       Incluir Telefone
+       </button>
+
+   </div>    
+   <div class="row"> &nbsp; </div>
+   <div class="card">
+     <div class="card-body">
+     <span 
+       *ngFor="let telefone of cliente.telefones; let i = index">
+       <label for="fone">{{telefone.numero}}</label>
+       <button type="button" class="btn btn-danger btn-sm ml-1" (click)="deletaFone(telefone)">X</button>
+       &nbsp;&nbsp;-&nbsp;&nbsp;
+     </span>
+     </div>
+   </div>
+ </div>
+ 
+ <div class="form-group">
+  <label for="Emails">Email(s)</label>
+  <span>&nbsp;&nbsp;&nbsp;</span>
+  <div class="col-md-6">
+     <input  #emailInput
+     class="form-control" 
+     id="email" 
+     placeholder="email" name="email">
+     <button class="btn btn-default" type="button"
+     (click)="addEmail()">
+     Incluir email
+     </button>
+ </div>    
+ <div class="row"> &nbsp; </div>
+ <div class="card">
+   <div class="card-body">
+   <span 
+     *ngFor="let email of cliente.emails; let i = index">
+     <label for="email">{{email.email}}</label>
+     <button type="button" class="btn btn-danger btn-sm ml-1" (click)="deletaEmail(email)">X</button>
+     &nbsp;&nbsp;-&nbsp;&nbsp;
+   </span>
+   </div>
+ </div>
+</div>
+
+
+  <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Salvar</button>
+
+
+</form>

@@ -1,0 +1,151 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      
+      <div class="text-right">
+        <button *ngIf="perfilUsuario()" type="button" class="btn btn-success" routerLink="/cliente/criar">Novo cliente</button>
+      </div>
+      <div class="text-center" *ngIf="!existemUsuarios()">
+        Nenhum cliente cadastrado.
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3" *ngFor="let cliente of usuarios">
+    <div class="col-md-8 mx-auto">
+      <div class="card">
+
+        <div class="card-body">
+          <div class="form-group">
+            CPF
+            <p-inputMask 
+            id="cpf" 
+            mask="999.999.999-99"
+            placeholder="cpf" name="cpf"
+            [(ngModel)]="cliente.cpf" 
+            readonly="true"
+            disabled="true" >
+          </p-inputMask>
+        </div>
+
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input pInputText 
+            readonly="true"
+            disabled="true"
+             id="nome" 
+              rows="3" 
+              minlength="3" maxlength="100" 
+              placeholder="nome" name="nome"
+              [(ngModel)]="cliente.nome">
+          </div>
+
+        
+          <div class="form-group">
+            <label for="cep">CEP</label>
+            <p-inputMask 
+              class="" 
+              id="cep" 
+              mask="99999-999"
+              placeholder="cep" name="cep"
+              [(ngModel)]="cliente.cep" 
+              readonly="true"
+              disabled="true"
+              >
+            </p-inputMask>
+          </div>
+          
+          <div class="form-group">
+            <label for="logradouro">Logradouro</label>
+            <input pInputText
+              id="logradouro" 
+              rows="3" 
+              placeholder="logradouro" name="logradouro"
+              [(ngModel)]="cliente.logradouro" 
+              readonly="true"
+            disabled="true" >
+          </div>
+        
+          <div class="form-group">
+            <label for="bairro">Bairro</label>
+            <input pInputText
+              id="bairro" 
+              rows="3" 
+              placeholder="bairro" name="bairro"
+              [(ngModel)]="cliente.bairro" 
+              readonly="true"
+            disabled="true" >
+
+          </div>
+        
+          <div class="form-group">
+            <label for="cidade">cidade</label>
+            <input pInputText
+            readonly="true"
+            disabled="true" 
+              id="cidade" 
+              rows="3" 
+              placeholder="cidade" name="cidade"
+              [(ngModel)]="cliente.cidade"               >
+          </div>
+        
+          <div class="form-group">
+            <label for="uf">UF</label>
+            <input pInputText
+            readonly="true"
+            disabled="true" 
+              id="uf" 
+              rows="3" 
+              placeholder="uf" name="uf"
+              [(ngModel)]="cliente.uf"               >
+          </div>
+
+          Telefone(s)
+          <div class="card">
+            <div class="card-body">
+            <span 
+              *ngFor="let telefone of cliente.telefones; let i = index">
+              <p-inputMask *ngIf="telefone.tipo == 'celular'"
+              id="telefone" 
+              mask="(99)99999-9999"
+              [(ngModel)]="telefone.numero" 
+              readonly="true"
+              disabled="true" >
+            </p-inputMask>
+            <p-inputMask *ngIf="telefone.tipo != 'celular'"
+            id="telefone" 
+            mask="(99)9999-9999"
+            [(ngModel)]="telefone.numero" 
+            readonly="true"
+            disabled="true" >
+          </p-inputMask>
+              &nbsp;&nbsp;-&nbsp;&nbsp;
+            </span>
+            </div>
+          </div>
+
+          <div class="row"> &nbsp; </div>
+
+          Email(s)
+          <div class="card">
+            <div class="card-body">
+            <span 
+              *ngFor="let email of cliente.emails; let i = index">
+              <label for="fone" >{{email.email}}</label>
+              &nbsp;&nbsp;-&nbsp;&nbsp;
+            </span>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="card-footer">
+          <div class="text-right">
+            <button *ngIf="perfilUsuario()" type="button" class="btn btn-primary btn-sm ml-1" routerLink="/cliente/editar/{{cliente.id}}">Editar</button>
+            <button *ngIf="perfilUsuario()" type="button" class="btn btn-danger btn-sm ml-1" (click)="deletaUsuario(cliente.id)">Excluir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
